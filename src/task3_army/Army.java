@@ -15,22 +15,6 @@ public class Army {
         }
     }
 
-    public void makeAttack() {
-        for (Soldier soldier : soldiers) {
-            if (soldier.type == SoldierType.OFFENSIVE) {
-                soldier.makeDamage();
-            }
-        }
-    }
-
-    public void makeDefense() {
-        for (Soldier soldier : soldiers) {
-            if (soldier.type == SoldierType.DEFENSIVE) {
-                soldier.makeDamage();
-            }
-        }
-    }
-
     public void flank() {
         for (Soldier soldier : soldiers) {
             if (soldier instanceof Knight) {

@@ -1,12 +1,19 @@
 package task3_army;
 
-public class Archer extends Soldier {
+import task3_army.interfaces.Defense;
+
+public class Archer extends Soldier implements Defense {
     public Archer(String name, int damage) {
-        super(name, damage, SoldierType.DEFENSIVE, "Archer");
+        super(name, damage, SoldierType.DEFENSIVE);
     }
 
     public void fireDefense() {
-        System.out.println(super.rank + " " + super.name + " in fire defense.");
+        System.out.println("Archer " + " " + super.name + " in fire defense.");
         super.makeDamage();
+    }
+
+    @Override
+    public void makeDefense() {
+        System.out.println("Archer " + super.makeDamage());
     }
 }

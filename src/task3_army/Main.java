@@ -1,5 +1,8 @@
 package task3_army;
 
+import task3_army.interfaces.Attack;
+import task3_army.interfaces.Defense;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -48,10 +51,18 @@ public class Main {
                     army.report();
                     continue;
                 case 2:
-                    army.makeAttack();
+                    for (Soldier soldier : soldiersList) {
+                        if (soldier instanceof Attack) {
+                            ((Attack) soldier).makeAttack();
+                        }
+                    }
                     continue;
                 case 3:
-                    army.makeDefense();
+                    for (Soldier soldier : soldiersList) {
+                        if (soldier instanceof Defense) {
+                            ((Defense) soldier).makeDefense();
+                        }
+                    }
                     continue;
                 case 4:
                     army.flank();
