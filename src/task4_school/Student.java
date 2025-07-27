@@ -1,16 +1,16 @@
 package task4_school;
 
-import java.util.List;
+import java.util.Map;
 
-public abstract class Student {
+public class Student {
     private String name;
-    private List<Subject> subjects;
+    private Map<Subject, Grade> subjects;
 
     public Student(String name) {
         this.name = name;
     }
 
-    public Student(String name, List<Subject> subjects) {
+    public Student(String name, Map<Subject, Grade> subjects) {
         this.name = name;
         this.subjects = subjects;
     }
@@ -19,7 +19,7 @@ public abstract class Student {
         return name;
     }
 
-    public List<Subject> getSubjects() {
+    public Map<Subject, Grade> getSubjects() {
         return subjects;
     }
 
@@ -27,7 +27,14 @@ public abstract class Student {
         this.name = name;
     }
 
-    public void setSubjects(List<Subject> subjects) {
+    public void setSubjects(Map<Subject, Grade> subjects) {
         this.subjects = subjects;
+    }
+
+    public double getAverageGrade() {
+        return subjects.values().stream()
+                .mapToDouble(Grade::getValue)
+                .average()
+                .orElse(0);
     }
 }

@@ -2,7 +2,7 @@ package task4_school;
 
 import java.util.List;
 
-public abstract class Clazz {
+public class Clazz {
     private final String name;
     private List<Student> students;
     private final Teacher primaryTeacher;
@@ -32,5 +32,12 @@ public abstract class Clazz {
 
     public void setStudents(List<Student> students) {
         this.students = students;
+    }
+
+    public double getAverageGrade() {
+        return students.stream()
+                .mapToDouble(Student::getAverageGrade)
+                .average()
+                .orElse(0);
     }
 }
