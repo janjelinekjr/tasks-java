@@ -3,7 +3,7 @@ package task4_school;
 import java.util.List;
 
 public class Teacher {
-    private String name;
+    private final String name;
     private List<Subject> subjects;
 
     public Teacher(String name, List<Subject> subjects) {

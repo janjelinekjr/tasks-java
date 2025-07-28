@@ -51,15 +51,19 @@ public class Main {
         Clazz firstC = new Clazz("1.C", List.of(alice, karel), teacherLukas);
         Clazz fourthA = new Clazz("4.A", List.of(jonathan, samuel), teacherMark);
 
-        showSortedStudentsByAverageGrade(getAllStudents(List.of(secondB, firstC, fourthA)));
+        showResult(List.of(secondB, firstC, fourthA));
+    }
+
+    public static void showResult(List<Clazz> clazzes) {
+        showSortedStudentsByAverageGrade(getAllStudents(clazzes));
         System.out.println();
         System.out.println("---------------------------------------------");
         System.out.println();
-        showSortedSubjectsByAverageGrade(getAllStudents(List.of(secondB, firstC, fourthA)));
+        showSortedSubjectsByAverageGrade(getAllStudents(clazzes));
         System.out.println();
         System.out.println("---------------------------------------------");
         System.out.println();
-        showSortedClazzesByTheBestStudents(List.of(secondB, firstC, fourthA));
+        showSortedClazzesByTheBestStudents(clazzes);
     }
 
     public static void showSortedStudentsByAverageGrade(List<Student> students) {
@@ -71,9 +75,22 @@ public class Main {
 
     public static void showSortedSubjectsByAverageGrade(List<Student> students) {
         System.out.println("Sorted subjects by average of grades given to students: ");
-        Map<Subject, Grade> allStudentsGradesInSubject = new HashMap<>();
-        students.forEach(s -> allStudentsGradesInSubject.putAll(s.getSubjects()));
-        Set<Subject> keys = allStudentsGradesInSubject.keySet();
+        Map<Subject, List<Grade>> gradesBySubject = new HashMap<>();
+        Map<String, Double> sortedSubjectsByGrades = new HashMap<>();
+        students.stream()
+                .flatMap(s -> s.getSubjects().entrySet().stream())
+                .forEach(entry -> {
+                    gradesBySubject
+                            .computeIfAbsent(entry.getKey(), k -> new ArrayList<>())
+                            .add(entry.getValue());
+                });
+        gradesBySubject.forEach((subject, grades) -> sortedSubjectsByGrades.put(subject.getName(), grades.stream()
+                .mapToDouble(Grade::getValue)
+                .average()
+                .orElse(0)));
+        sortedSubjectsByGrades.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .forEach((e) -> System.out.println(e.getKey() + " - " + e.getValue()));
     }
 
     public static void showSortedClazzesByTheBestStudents(List<Clazz> clazzes) {
