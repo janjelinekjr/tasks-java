@@ -1,6 +1,7 @@
 package task4_school;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class Student {
     private String name;
@@ -36,5 +37,17 @@ public class Student {
                 .mapToDouble(Grade::getValue)
                 .average()
                 .orElse(0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name) && Objects.equals(subjects, student.subjects);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, subjects);
     }
 }
